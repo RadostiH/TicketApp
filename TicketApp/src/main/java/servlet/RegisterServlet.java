@@ -27,7 +27,7 @@ public class RegisterServlet extends HttpServlet {
 		      throws ServletException, IOException {
 		RegisterUserBindingModel model = getData(request);
  		registerService.registerUser(model);
- 		response.sendRedirect("/TicketApp/home");
+ 		response.sendRedirect("/TicketApp/login");
 	}
 
 	private RegisterUserBindingModel getData(HttpServletRequest request) {

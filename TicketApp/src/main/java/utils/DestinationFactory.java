@@ -21,7 +21,7 @@ public class DestinationFactory {
 			statement.setString(1, from);
 			statement.setString(2, to);
 			statement.setString(3, departure);
-			ResultSet rs = statement.executeQuery(sql);
+			ResultSet rs = statement.executeQuery();
 			if(rs.next()){
 				destination = this.extractDestinationFromResultSet(rs);
 			}

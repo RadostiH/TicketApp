@@ -17,17 +17,18 @@ private Connection connection;
 		this.connection = new DatabaseConnector().sqlConnection();
 	}
 	
-	public User findUser(String username) {
+	public User findUser(String username) throws NullPointerException {
 		User user = new User();
 		try {
-			String sql ="SELECT * FROM users WHERE username = ?";
+			String sql ="SELECT * FROM users WHERE username = ?;";
 			PreparedStatement statement = this.connection.prepareStatement(sql);
 			statement.setString(1, username);
-			ResultSet rs = statement.executeQuery(sql);
+			ResultSet rs = statement.executeQuery();
 			if(rs.next()){
 				user = this.extractUserFromResultSet(rs);
 			}
 		}catch (PSQLException e) {
+			e.printStackTrace();
 			return null;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -103,7 +104,7 @@ private Connection connection;
 	
 	private User extractUserFromResultSet(ResultSet rs) throws SQLException {
 		User user = new User();
-		user.setId(rs.getInt("id"));
+		user.setId(rs.getInt("user_id"));
 		user.setUsername(rs.getString("username"));
 		user.setPassword(rs.getString("password"));
 		user.setRoles(rs.getString("roles"));

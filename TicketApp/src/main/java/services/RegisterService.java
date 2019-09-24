@@ -42,9 +42,9 @@ public class RegisterService {
 	}
 
 	private boolean userExists(RegisterUserBindingModel model) {
-		if(this.userFactory.findUser(model.getUsername()) != null) {
-			return true;
+		if(this.userFactory.findUser(model.getUsername()) == null) {
+			return false;
 		}
-		return false;
+		return true;
 	}
 }
