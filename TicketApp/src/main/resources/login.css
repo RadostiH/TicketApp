@@ -1,0 +1,9 @@
+button {
+  margin: auto;
+  position: absolute;
+  top: 20;
+  left: 100;
+  bottom: 50;
+  right: 70;
+  height: 40px;
+}
