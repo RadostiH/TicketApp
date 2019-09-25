@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
 <link rel="stylesheet"
@@ -12,9 +13,12 @@
 
 			<div class="col-md-4">
 
-				<form action="TicketApp/home" method="POST">
+				<form action="/TicketApp/login" method="POST">
 					<h2>Ticket Application</h2>
 					<div class="container">
+					<%if(request.getAttribute("error") != null){ %>
+					<%=request.getAttribute("error") %>
+					<%} %>
 						<div class="row-5">
 							<label for="uname"><b>Username</b></label><br> <input
 								type="text" placeholder="Enter Username" name="uname" required>

@@ -30,10 +30,12 @@ public class LoginService {
 	}
 
 	private boolean validateUsername(String username) {
-		if(userFactory.findUser(username) == null) {
-		return false;
+		try{
+			userFactory.findUser(username);
+			return true;
+		}catch (NullPointerException e) {
+			return false;
 		}
-		return true;
 	}
 
 	private boolean validatePassword(UserLoginBindingModel model) {

@@ -20,7 +20,11 @@ public class RegisterServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		request.getRequestDispatcher("\\jsp\\register.jsp").forward(request, response);
+		if(request.getSession().getAttribute("username") == null) {
+			request.getRequestDispatcher("\\jsp\\register.jsp").forward(request, response);
+		}else {
+			response.sendRedirect("/TicketApp/home");
+		}
 	}
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)

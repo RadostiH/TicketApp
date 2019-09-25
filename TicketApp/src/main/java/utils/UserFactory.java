@@ -29,7 +29,7 @@ private Connection connection;
 			}
 		}catch (PSQLException e) {
 			e.printStackTrace();
-			return null;
+			throw new NullPointerException();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
