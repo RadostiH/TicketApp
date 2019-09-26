@@ -1,10 +1,12 @@
 package domain.models.service;
 
+import domain.enums.Role;
+
 public class UserServiceModel {
 	
 	private String username;
 	private String password;
-	private String role;
+	private Role role;
 	
 	public UserServiceModel() {
 	}
@@ -25,15 +27,11 @@ public class UserServiceModel {
 		this.password = password;
 	}
 
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
-	
-	
-	
-
 }

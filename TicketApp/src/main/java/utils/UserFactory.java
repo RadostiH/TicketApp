@@ -17,10 +17,10 @@ private Connection connection;
 		this.connection = new DatabaseConnector().sqlConnection();
 	}
 	
-	public User findUser(String username) throws NullPointerException {
-		User user = new User();
+	public User findUser(String username){
+		User user = null;
 		try {
-			String sql ="SELECT * FROM users WHERE username = ?;";
+			String sql ="SELECT * FROM users WHERE username = ?";
 			PreparedStatement statement = this.connection.prepareStatement(sql);
 			statement.setString(1, username);
 			ResultSet rs = statement.executeQuery();
@@ -28,8 +28,7 @@ private Connection connection;
 				user = this.extractUserFromResultSet(rs);
 			}
 		}catch (PSQLException e) {
-			e.printStackTrace();
-			throw new NullPointerException();
+			return user;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -58,7 +57,7 @@ private Connection connection;
 	        				+ "VALUES (?, ?, ?)");
 	        ps.setString(1, user.getUsername());
 	        ps.setString(2, user.getPassword());
-	        ps.setString(3, user.getRole());
+	        ps.setString(3, user.getRole().toString());
 	        int i = ps.executeUpdate();
 	      if(i == 1) {
 	        return true;
@@ -90,7 +89,7 @@ private Connection connection;
 	
 	public boolean deleteUser(int id) {
 	    try {
-	        PreparedStatement stmt = this.connection.prepareStatement("DELETE * FROM users WHERE id = ?");
+	        PreparedStatement stmt = this.connection.prepareStatement("DELETE FROM users WHERE user_id = ?");
 	        stmt.setInt(1, id);
 	        int i = stmt.executeUpdate();
 	        if(i == 1) {

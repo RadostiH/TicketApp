@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import domain.entities.Destination;
+import domain.models.binding.DestinationBindingModel;
 
 public class DestinationFactory {
 	
@@ -17,7 +18,9 @@ public class DestinationFactory {
 	public Destination findDestination(String from, String to, String departure) {
 		Destination destination = new Destination();
 		try {
-			String sql = "SELECT * FROM destinations WHERE start_pint = ? end_point = ? departure = ?";
+			String sql = "SELECT * FROM destinations WHERE start_point = ? "
+					+ "AND end_point = ? "
+					+ "AND departure = ?";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, from);
 			statement.setString(2, to);
@@ -78,7 +81,7 @@ public class DestinationFactory {
 		return destinations;
 	}
 	
-	public boolean addDestination(Destination destination) {
+	public boolean addDestination(DestinationBindingModel destination) {
 	    try {
 	        PreparedStatement ps = 
 	        		this.connection.prepareStatement("INSERT INTO destinations"
@@ -124,7 +127,8 @@ public class DestinationFactory {
 	
 	public boolean deleteDestination(int id) {
 	    try {
-	        PreparedStatement stmt = this.connection.prepareStatement("DELETE * FROM destinations WHERE id = ?");
+	        PreparedStatement stmt = this.connection.prepareStatement("DELETE FROM destinations WHERE id = ?");
+	        stmt.setInt(1, id);
 	        int i = stmt.executeUpdate();
 	      if(i == 1) {
 	    return true;
@@ -146,10 +150,4 @@ public class DestinationFactory {
 		destination.setPrice(rs.getDouble("price"));
 		return destination;
 	}
-	
-	
-	
-	
-	
-	
 }

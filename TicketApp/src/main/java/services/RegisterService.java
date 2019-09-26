@@ -1,6 +1,7 @@
 package services;
 
 
+import domain.enums.Role;
 import domain.models.binding.RegisterUserBindingModel;
 import domain.models.service.UserServiceModel;
 import utils.UserFactory;
@@ -27,26 +28,26 @@ public class RegisterService {
 		UserServiceModel serviceModel = new UserServiceModel();
 		serviceModel.setUsername(bindingModel.getUsername());
 		serviceModel.setPassword(bindingModel.getPassword());
-		serviceModel.setRole("ROLE_USER");
+		serviceModel.setRole(Role.ROLE_USER);
 		return serviceModel;
 	}
 
 	private boolean validateUser(RegisterUserBindingModel model) {
-		if(this.userExists(model)) {
+		if(model == null || this.userExists(model) || model.getUsername().length() < 4) {
 			return false;
 		}
-		if(!model.getPassword().equals(model.getConfirmPassword())) {
+		if(!model.getPassword().equals(model.getConfirmPassword())
+				|| model.getPassword().trim().length() < 8
+				|| model.getPassword() == null) {
 			return false;
 		}
 		return true;
 	}
 
 	private boolean userExists(RegisterUserBindingModel model) {
-		try{
-			userFactory.findUser(model.getUsername());
+		if(userFactory.findUser(model.getUsername()) != null) {
 			return true;
-		}catch (NullPointerException e) {
-			return false;
 		}
+		return false;
 	}
 }

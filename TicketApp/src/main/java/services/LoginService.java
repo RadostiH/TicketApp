@@ -13,14 +13,14 @@ public class LoginService {
 	}
 	
 	public boolean loginUser(UserLoginBindingModel model) {
-		if(validateUser(model)) {
+		if(model != null && validateUser(model)) {
 			return true;
 		}
 		return false;
 	}
 
 	private boolean validateUser(UserLoginBindingModel model) {
-		if(!validateUsername(model.getUsername())) {
+		if(!userExists(model.getUsername())) {
 			return false;
 		}
 		if(!validatePassword(model)) {
@@ -29,13 +29,11 @@ public class LoginService {
 		return true;
 	}
 
-	private boolean validateUsername(String username) {
-		try{
-			userFactory.findUser(username);
-			return true;
-		}catch (NullPointerException e) {
+	private boolean userExists(String username) {
+			if(userFactory.findUser(username) != null) {
+				return true;
+			}
 			return false;
-		}
 	}
 
 	private boolean validatePassword(UserLoginBindingModel model) {
@@ -45,5 +43,4 @@ public class LoginService {
 		}
 		return false;
 	}
-
 }
