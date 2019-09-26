@@ -3,6 +3,7 @@ package utils;
 
 import java.sql.*;
 import java.util.ArrayList;
+
 import domain.entities.Destination;
 
 public class DestinationFactory {
@@ -16,7 +17,7 @@ public class DestinationFactory {
 	public Destination findDestination(String from, String to, String departure) {
 		Destination destination = new Destination();
 		try {
-			String sql = "SELECT * FROM destinations WHERE from = ? to = ? departure = ?";
+			String sql = "SELECT * FROM destinations WHERE start_pint = ? end_point = ? departure = ?";
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setString(1, from);
 			statement.setString(2, to);
@@ -29,6 +30,38 @@ public class DestinationFactory {
 			e.printStackTrace();
 		}
 		return destination;
+	}
+	
+	public ArrayList<Destination> findDestinationsByStartingPoint(String from) {
+		ArrayList<Destination> destinations = new ArrayList<Destination>();
+		try {
+			String sql = "SELECT * FROM destinations WHERE start_point = ?";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, from);
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()){
+				destinations.add(this.extractDestinationFromResultSet(rs));
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return destinations;
+	}
+	
+	public ArrayList<Destination> findDestinationsByEndPoint(String to) {
+		ArrayList<Destination> destinations = new ArrayList<Destination>();
+		try {
+			String sql = "SELECT * FROM destinations WHERE end_point = ?";
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, to);
+			ResultSet rs = statement.executeQuery();
+			while(rs.next()){
+				destinations.add(this.extractDestinationFromResultSet(rs));
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return destinations;
 	}
 	
 	public ArrayList<Destination> getAllDestinations() {
@@ -71,7 +104,7 @@ public class DestinationFactory {
 		try {
 	        PreparedStatement ps = 
 	        		this.connection.prepareStatement("UPDATE destinations SET"
-	        				+ " from=?, to=?, departure=?, arrival=?, places=?, price=?  WHERE id = ?");
+	        				+ " start_point=?, end_point=?, departure=?, arrival=?, places=?, price=?  WHERE id = ?");
 	        ps.setString(1, destination.getStartPoint());
 	        ps.setString(2, destination.getStartPoint());
 	        ps.setString(3, destination.getDeparture());

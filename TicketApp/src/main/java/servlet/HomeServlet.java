@@ -25,6 +25,7 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if(req.getSession().getAttribute("username") != null) {
 			ArrayList<Destination> list = df.getAllDestinations();
+			req.setAttribute("username", req.getSession().getAttribute("username"));
 			req.setAttribute("list", list);
 			req.getRequestDispatcher("\\jsp\\home.jsp").forward(req, resp);
 		}else{
