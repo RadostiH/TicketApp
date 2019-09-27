@@ -10,7 +10,13 @@ public class UserServiceModel {
 	
 	public UserServiceModel() {
 	}
-
+	
+	public UserServiceModel(String username, String password, Role role) {
+		this.username = username;
+		this.password = password;
+		this.role = role;
+	}
+	
 	public String getUsername() {
 		return username;
 	}

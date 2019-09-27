@@ -63,5 +63,5 @@ public class FinderService {
 	private ArrayList<Destination> setEndDestinations(String endPoint) {
 		return this.destinationFactory
 		.findDestinationsByEndPoint(endPoint);
-}
+	}
 }

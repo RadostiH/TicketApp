@@ -72,7 +72,7 @@ private Connection connection;
 		try {
 	        PreparedStatement ps = 
 	        		this.connection.prepareStatement("UPDATE users SET"
-	        				+ " username=?, password=?, roles=?  WHERE id = ?");
+	        				+ " username=?, password=?, roles=?  WHERE user_id = ?");
 	        ps.setString(1, user.getUsername());
 	        ps.setString(2, user.getPassword());
 	        ps.setString(3, user.getRoles());
